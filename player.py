@@ -3,13 +3,14 @@ import math
 import walls
 import os
 class Character(pygame.sprite.Sprite):
-	def __init__(self, (pos)):
+	def __init__(self, (pos), clock):
 		pygame.sprite.Sprite.__init__(self)
 		self.still = load_png("guy.png")
 		self.walk1 = load_png("guy2.png")
 		self.walk2 = load_png("guy3.png")
 		self.sprite = self.still
 		self.clock = pygame.time.Clock()
+		self.actual_clock = clock
 		self.rect = self.sprite.get_rect()
 		self.speed = 0.3
 		self.pos = pos
@@ -28,14 +29,19 @@ class Character(pygame.sprite.Sprite):
 			#print self.on_ground ##WAS USED FOR DEBUG
 		if left:
 			#Move left
-			self.dx = -5
+			self.dx = (-300 * (1/self.actual_clock.get_fps()))
 		if right:
 			#Move right
-			self.dx = 5
+			self.dx = (300 * (1/self.actual_clock.get_fps()))
 		if not self.on_ground:
 			#if we're in the air, slow down and fall
-			self.dy += self.speed
-			if self.dy > 10: self.dy = 10
+			#self.dy += (self.speed * (1/self.actual_clock.get_fps()))
+			if not self.actual_clock.get_fps() == 0:
+				self.dy += (self.speed*60 * (1/self.actual_clock.get_fps()))
+				if self.dy > (600*(1/self.actual_clock.get_fps())): self.dy = (10*(1/self.actual_clock.get_fps()))
+			else:
+				self.dy += self.speed
+				if self.dy > 10: self.dy = 10
 		if not (left or right):
 			self.dx = 0
 			self.sprite = self.still

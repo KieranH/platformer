@@ -17,7 +17,7 @@ def main():
 	clock = pygame.time.Clock()
 	
 	#Init Objects
-	guy = Character([32,32])
+	guy = Character([32,32], clock)
 	playersprite = pygame.sprite.RenderPlain(guy)
 	
 	#level data
