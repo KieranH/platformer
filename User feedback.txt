@@ -1,0 +1,2 @@
+Due to users concerns about the efficiency of the program I have taken the following steps to improve efficiency:
+	-Prerender all text
