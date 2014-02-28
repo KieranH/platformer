@@ -38,7 +38,7 @@ class Character(pygame.sprite.Sprite):
 			#self.dy += (self.speed * (1/self.actual_clock.get_fps()))
 			if not self.actual_clock.get_fps() == 0:
 				self.dy += (self.speed*60 * (1/self.actual_clock.get_fps()))
-				if self.dy > (600*(1/self.actual_clock.get_fps())): self.dy = (10*(1/self.actual_clock.get_fps()))
+				if self.dy > (600*(1/self.actual_clock.get_fps())): self.dy = (600*(1/self.actual_clock.get_fps()))
 			else:
 				self.dy += self.speed
 				if self.dy > 10: self.dy = 10
