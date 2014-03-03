@@ -12,7 +12,7 @@ class Character(pygame.sprite.Sprite):
 		self.clock = pygame.time.Clock()
 		self.actual_clock = clock
 		self.rect = self.sprite.get_rect()
-		self.speed = 0.3
+		self.speed = 30
 		self.pos = pos
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
@@ -21,10 +21,11 @@ class Character(pygame.sprite.Sprite):
 		self.dy = self.dx = 0
 		
 	def update(self, up, left, right):
+		acc_mod = 1.0
 		if up:
 			#if on ground, jump
 			if self.on_ground:
-				self.dy = -10
+				self.dy = -(600* (1/self.actual_clock.get_fps()))
 				self.on_ground = False
 			#print self.on_ground ##WAS USED FOR DEBUG
 		if left:
@@ -37,10 +38,11 @@ class Character(pygame.sprite.Sprite):
 			#if we're in the air, slow down and fall
 			#self.dy += (self.speed * (1/self.actual_clock.get_fps()))
 			if not self.actual_clock.get_fps() == 0:
-				self.dy += (self.speed*60 * (1/self.actual_clock.get_fps()))
+				acc_mod = 60 / self.actual_clock.get_fps()
+				self.dy += (self.speed * acc_mod * (1/self.actual_clock.get_fps()))
 				if self.dy > (600*(1/self.actual_clock.get_fps())): self.dy = (600*(1/self.actual_clock.get_fps()))
 			else:
-				self.dy += self.speed
+				self.dy += (self.speed * acc_mod)
 				if self.dy > 10: self.dy = 10
 		if not (left or right):
 			self.dx = 0
