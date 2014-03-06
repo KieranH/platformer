@@ -19,34 +19,25 @@ class Character(pygame.sprite.Sprite):
 		self.wall_data = walls.build_level()
 		self.on_ground = False
 		self.dy = self.dx = 0
+		self.frame_rate = 60
 		
 	def update(self, up, left, right):
-		acc_mod = 1.0
+		if self.actual_clock.get_fps() != 0:
+			self.frame_rate = self.actual_clock.get_fps()
 		if up:
 			#if on ground, jump
-			if self.on_ground:
-				self.dy = -(600* (1/self.actual_clock.get_fps()))
-				self.on_ground = False
-			#print self.on_ground ##WAS USED FOR DEBUG
+			self.jump()
 		if left:
 			#Move left
-			self.dx = (-300 * (1/self.actual_clock.get_fps()))
+			self.dx = (-300 * (1/self.frame_rate))
 		if right:
 			#Move right
-			self.dx = (300 * (1/self.actual_clock.get_fps()))
-		if not self.on_ground:
-			#if we're in the air, slow down and fall
-			#self.dy += (self.speed * (1/self.actual_clock.get_fps()))
-			if not self.actual_clock.get_fps() == 0:
-				acc_mod = 60 / self.actual_clock.get_fps()
-				self.dy += (self.speed * acc_mod * (1/self.actual_clock.get_fps()))
-				if self.dy > (600*(1/self.actual_clock.get_fps())): self.dy = (600*(1/self.actual_clock.get_fps()))
-			else:
-				self.dy += (self.speed * acc_mod)
-				if self.dy > 10: self.dy = 10
+			self.dx = (300 * (1/self.frame_rate))
 		if not (left or right):
 			self.dx = 0
 			self.sprite = self.still
+			
+		self.gravity()
 		
 		#Move in x
 		self.rect.x += self.dx
@@ -58,11 +49,25 @@ class Character(pygame.sprite.Sprite):
 		self.collision(0, self.dy)
 		pygame.event.pump()
 		
+	def jump(self):
+		if self.on_ground:
+			self.dy = -10
+			self.on_ground = False
+			
+	def gravity(self):
+		if not self.on_ground:
+			if self.dy == 0:
+				self.dy = 1
+			else:
+				self.dy += 0.35
+		self.collision(0, self.dy)
+			
+		
 	def change_sprite(self):
 		if self.sprite == self.walk1:
 			self.sprite = self.walk2
 		else:
-			self.sprite = self.walk1		
+			self.sprite = self.walk1
 	
 	def collision(self, dx, dy):
 		for wall in self.wall_data:
