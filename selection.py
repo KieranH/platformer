@@ -1,4 +1,4 @@
-menu = ["Play", "Instructions"]
+menu = ["Play", "Instructions", "Exit"]
 
 current_position = 0
 
