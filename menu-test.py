@@ -22,7 +22,7 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont("arial", 20)
 
 #setup array to hold text data
-text = [["Play", [(0,0,0), (100,100)], [None, None]], ["Instructions", [(0,0,0), (100,200)], [None, None]]]
+text = [["Play", [(0,0,0), (50,300)], [None, None]], ["Instructions", [(0,0,0), (50,325)], [None, None]]]
 
 def render_text(text, colour):
 	"""Gives me a nice way to render text"""
