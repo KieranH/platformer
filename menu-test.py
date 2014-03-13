@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+"""Global Constants"""
 #keep this the same size as the game will be, 25x20 blocks
 DISPLAY = (800, 640)
 DEPTH = 32
@@ -11,6 +12,11 @@ current_position = 0
 
 pygame.init()
 
+screen = pygame.display.set_mode(DISPLAY, FLAGS, DEPTH)
+screen.fill((255,255,255))
+
+clock = pygame.time.Clock()
+
 #define font that will be used throughout the game
 #print pygame.font.get_fonts()
 font = pygame.font.SysFont("arial", 20)
@@ -19,6 +25,7 @@ font = pygame.font.SysFont("arial", 20)
 text = [["Play", [(0,0,0), (100,100)], [None, None]], ["Instructions", [(0,0,0), (100,200)], [None, None]]]
 
 def render_text(text, colour):
+	"""Gives me a nice way to render text"""
 	return font.render(text, 0, colour)
 	
 for item in text:
@@ -26,6 +33,7 @@ for item in text:
 	item[2][1] = render_text(">"+item[0]+"<", (255, 0, 0))
 
 def move_pos(num, list):
+	"""This will allow the user to select something in the menu and let them scroll through the items available"""
 	global current_position
 	if current_position + num < len(list) and current_position + num >= 0:
 		current_position = current_position + num
@@ -34,6 +42,7 @@ def move_pos(num, list):
 	else: current_position = len(list) - 1
 	
 def next_event(pos):
+	"""This function determines what will happen next based on what's currently selected in the menu"""
 	if pos == 0:
 		#main()
 		print "game loop"
@@ -43,11 +52,7 @@ def next_event(pos):
 		sys.exit()
 
 def menu():
-	screen = pygame.display.set_mode(DISPLAY, FLAGS, DEPTH)
-	screen.fill((255,255,255))
-	
-	clock = pygame.time.Clock()
-	
+	"""We only want stuff relevant to only the running of the menu here"""
 	while True:
 		#limit framerate to 60fps
 		clock.tick(60)

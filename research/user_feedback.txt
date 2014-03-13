@@ -1,1 +1,2 @@
-Could allow menu to be moved around with left/right arrow keys
++ Could allow menu to be moved around with left/right arrow keys
++ Add an exit option to the menu
