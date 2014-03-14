@@ -1,6 +1,8 @@
 import pygame
 import player
 from player import *
+import menu
+from menu import *
 import walls
 import sys
 
@@ -23,7 +25,8 @@ def main():
 	#level data
 	wall_data = walls.build_level()
 	up = left = right = change_sprite = timer_running = False
-	
+	menu = Menu(DISPLAY, DEPTH, FLAGS, screen, clock)
+	menu.menu()
 	while True:
 		#limit framerate to 60fps
 		clock.tick(60)
