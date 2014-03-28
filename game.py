@@ -48,6 +48,7 @@ def main():
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_UP or event.key == pygame.K_SPACE: #I forgot to check for space key up, kept jumping forever
 					up = False
+
 				if event.key == pygame.K_LEFT:
 					left = False
 				if event.key == pygame.K_RIGHT:
