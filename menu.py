@@ -5,13 +5,13 @@ class Menu:
 
 	def __init__(self, DISPLAY, DEPTH, FLAGS, screen, clock):
 		"""Setup Menu class"""
-		self.DISPLAY = DISPLAY
+		self.DISPLAY = DISPLAY #constant values for display
 		self.DEPTH = DEPTH
 		self.FLAGS = FLAGS
 		self.screen = screen
 		#will be used for an array
 		self.current_position = 0
-		self.clock = clock
+		self.clock = clock #keep the clock from the main form
 		self.font = pygame.font.SysFont("arial", 20)
 		
 		#setup array to hold text data
@@ -43,10 +43,50 @@ class Menu:
 			#main()
 			self.running = False
 		elif pos == 1:
-			print "instructions"
+			print self.instructions()
 		else:
 			sys.exit()
 
+	def instructions(self):
+		"""Everything that's needed to draw the instructions will go here"""
+		main_text = ["The game is easy to play, all you need to do is",
+						"use the directional keys on the keyboard to move",
+						"and to exit all you need to do is press 'q' or Escape!"]
+		main_render = []
+		
+		exit_render = self.render_text(">Return to Menu<", (255, 0, 0))
+		for item in main_text:
+			main_render.append(self.render_text(item, (0, 0, 0)))
+		instruc_run = True
+		while instruc_run:
+			#limit framerate to 60fps
+			self.clock.tick(60)
+			#set title
+			pygame.display.set_caption("Instructions")
+			
+			#Events
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					#exit cleanly
+					sys.exit()
+				if event.type == pygame.KEYDOWN:
+					#Handle keyboard inputs
+					if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
+						sys.exit()
+					if event.key == pygame.K_RETURN:
+						instruc_run = False
+			
+			pos = 200
+			for item in main_render:
+				#if the current item is the same as the user selected one, draw it in a different colour
+					self.screen.blit(item, (100, pos))
+					pos += 30
+			self.screen.blit(exit_render, (600, 600))
+			#draw changes to the screen
+			pygame.display.flip()
+			#fill in the screen so we can write text over it again
+			self.screen.fill((255,255,255))
+		
 	def menu(self):
 		"""We only want stuff relevant to only the running of the menu here"""
 		self.running = True
