@@ -9,12 +9,12 @@ class Exit(object):
 		exit_rect.append(self)
 		self.rect = pygame.Rect(pos[0], pos[1], 32, 32)
 
-def build_level():		
+def build_level(lev_num = 0):		
 	global walls
 	global exit_rect
 	walls = [] #holds walls
 	exit_rect = []
-	level = [
+	level = [[
 		"WWWWWWWWWWWWWWWWWWWW",
 		"W                  W",
 		"W                  W",
@@ -30,10 +30,27 @@ def build_level():
 		"W                  W",
 		"W          WW      W",
 		"WWWWWWWWWWWWWWWWWWWW",
-		]
+		],
+[
+		"WWWWWWWWWWWWWWWWWWWW",
+		"W                  W",
+		"W                 EW",
+		"W   WWWW       WWW W",
+		"W   W              W",
+		"W WWW     W        W",
+		"W   W   WWW W      W",
+		"W   W     W   WWW WW",
+		"W   WW    W   W W  W",
+		"W         W   W W  W",
+		"WWW       WWWWW W  W",
+		"W                  W",
+		"W                  W",
+		"W          WW      W",
+		"WWWWWWWWWWWWWWWWWWWW",
+		],		]
 		
 	x = y = 0
-	for row in level:
+	for row in level[lev_num]:
 		for col in row:
 			if col == "W":
 				Wall((x,y))
@@ -42,5 +59,4 @@ def build_level():
 			x += 32
 		y += 32
 		x = 0
-	print exit_rect
 	return walls, exit_rect

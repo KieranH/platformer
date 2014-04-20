@@ -3,7 +3,7 @@ import math
 import walls
 import os
 class Character(pygame.sprite.Sprite):
-	def __init__(self, (pos), clock):
+	def __init__(self, (pos), clock, level = 0):
 		pygame.sprite.Sprite.__init__(self)
 		self.still = load_png("guy.png")
 		self.walk1 = load_png("guy2.png")
@@ -16,7 +16,7 @@ class Character(pygame.sprite.Sprite):
 		self.pos = pos
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
-		self.wall_data = walls.build_level()
+		self.wall_data, self.exit_location = walls.build_level(level)
 		self.on_ground = False
 		self.dy = self.dx = 0
 		self.frame_rate = 60
@@ -81,6 +81,8 @@ class Character(pygame.sprite.Sprite):
 					self.rect.bottom = wall.rect.top
 					self.on_ground = True
 					self.dy = 0
+		if self.rect.colliderect(self.exit_location[0].rect):
+			pygame.event.post(pygame.event.Event(pygame.USEREVENT + 2))
 		
 def load_png(filename):
 	file = os.path.join('resources', filename)
