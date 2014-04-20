@@ -23,7 +23,7 @@ def main():
 	playersprite = pygame.sprite.RenderPlain(guy)
 	
 	#level data
-	wall_data = walls.build_level()
+	wall_data, exit_location = walls.build_level()
 	up = left = right = change_sprite = timer_running = False
 	menu = Menu(DISPLAY, DEPTH, FLAGS, screen, clock)
 	menu.menu()
@@ -67,6 +67,9 @@ def main():
 		screen.fill((255,255,255))
 		for wall in wall_data:
 			pygame.draw.rect(screen, (0,0,0), wall.rect)
+		
+		#draw the exit
+		pygame.draw.rect(screen, (0,0,255), exit_location[0].rect)
 		guy.update(up, left, right)
 		screen.blit(guy.sprite, guy.rect)
 		#print guy.rect
