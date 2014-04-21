@@ -70,6 +70,8 @@ class Character(pygame.sprite.Sprite):
 			self.sprite = self.walk1
 	
 	def collision(self, dx, dy):
+		if self.rect.colliderect(self.exit_location[0].rect):
+			pygame.event.post(pygame.event.Event(pygame.USEREVENT + 2))
 		for wall in self.wall_data:
 			if self.rect.colliderect(wall.rect):
 				if dx > 0: self.rect.right = wall.rect.left
@@ -81,8 +83,6 @@ class Character(pygame.sprite.Sprite):
 					self.rect.bottom = wall.rect.top
 					self.on_ground = True
 					self.dy = 0
-		if self.rect.colliderect(self.exit_location[0].rect):
-			pygame.event.post(pygame.event.Event(pygame.USEREVENT + 2))
 		
 def load_png(filename):
 	file = os.path.join('resources', filename)

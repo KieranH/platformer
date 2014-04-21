@@ -25,6 +25,7 @@ def main():
 	#level data
 	wall_data, exit_location = walls.build_level()
 	level = 0
+	next_level = True
 	up = left = right = change_sprite = timer_running = False
 	menu = Menu(DISPLAY, DEPTH, FLAGS, screen, clock)
 	menu.menu()
@@ -55,10 +56,15 @@ def main():
 					right = False
 			if event.type == (pygame.USEREVENT + 1):
 				change_sprite = True
-			if event.type == (pygame.USEREVENT + 2):
+			if event.type == (pygame.USEREVENT + 3):
+				next_level = True
+			if event.type == (pygame.USEREVENT + 2) and next_level:
 				level += 1
 				wall_data, exit_location = walls.build_level(level)
 				guy = Character([32,32], clock, level)
+				next_level = False
+				pygame.event.clear()
+				pygame.time.set_timer(pygame.USEREVENT + 3, 1000)
 				
 		if (left or right) and not timer_running:
 			pygame.time.set_timer(pygame.USEREVENT + 1, 100)
